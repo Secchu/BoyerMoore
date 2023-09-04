@@ -82,3 +82,47 @@ There is a Nunit test where both approaches are used and results are compared. B
  
 You can specify multiple charater array delimiters or string delimiters with String.Split but you cannot do that with BoyerMooreTokenize. The
 extension method is suitable for searching long strings with a long delimiter. For single character delimiter your better off using String.Split.
+
+================================================================================================================================================================
+Example
+=======
+using BoyerMooreExtension;
+
+int index = "Her name is Jessica Smith".OneTimeBoyerMooreSearch("Jessica");
+
+Console.WriteLine($"The name Jessica appears on index: {index}");
+
+var test = "Her name is Jessica Smith. Her Aunties name is Jessica Smith. Her name is also Jessica Smith";
+
+var indexes = test.BoyerMooreSearch("Jessica");
+
+Console.WriteLine("\nBelow are the starting indexes in which Jessica appear in string");
+foreach(var i in indexes)
+    Console.WriteLine(i);
+
+var replace = test.BoyerMooreReplace("Jessica Smith", "Anne Taylor");
+
+Console.WriteLine($"\nReplacememt string: {replace.Replaced}");
+Console.WriteLine($"Number of replacements: {replace.nReplaced}");
+
+var tokens = test.BoyerMooreTokenize("Jessica");
+
+foreach (var token in tokens)
+    Console.WriteLine(token);
+	
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Results
+=======
+The name Jessica appears on index: 12
+
+Below are the starting indexes in which Jessica appear in string
+12
+47
+79
+
+Replacememt string: Her name is Anne Taylor. Her Aunties name is Anne Taylor. Her name is also Anne Taylor
+Number of replacements: 3
+Her name is
+ Smith. Her Aunties name is
+ Smith. Her name is also
+ Smith
